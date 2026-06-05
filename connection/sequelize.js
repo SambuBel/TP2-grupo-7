@@ -1,17 +1,14 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("tp_final_gr7", "root", "root", {
-  host: "localhost",
-  dialect: "mysql",
-  port: 8889, 
-});
-
-
-try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+const sequelize = new Sequelize(
+  "tp_final_grupo_7",
+  "tp_user",
+  "tp1234",
+  {
+    host: "127.0.0.1",
+    dialect: "mysql",
+    port: 3306,
+  }
+);
 
 export default sequelize;

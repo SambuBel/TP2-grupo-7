@@ -8,6 +8,8 @@ const DB_PASSWORD = env.DB_PASSWORD;
 const DB_NAME = env.DB_NAME;
 const DB_DIALECT = env.DB_DIALECT;
 
+console.log("variables: ", env.DB_HOST)
+
 export {
   SERVER_PORT,
   DB_HOST,
