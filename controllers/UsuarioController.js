@@ -3,7 +3,7 @@ export class UsuarioController {
     this.usuarioService = usuarioService;
   }
 
-  getAllUsuarios = async (req, res) => {
+  getAllUsuarios = async (_req, res) => {
     try {
       const usuarios = await this.usuarioService.getAllUsuarios();
       res.json({ success: true, data: usuarios });
@@ -24,7 +24,11 @@ export class UsuarioController {
 
   createUsuario = async (req, res) => {
     try {
-      const usuario = await this.usuarioService.createUsuario(req.body);
+      const { nombre, email, password } = req.body;
+      if (!nombre || !email || !password)
+        return res.status(400).json({ success: false, message: "nombre, email y password son requeridos" });
+
+      const usuario = await this.usuarioService.createUsuario({ nombre, email, password });
       res.status(201).json({ success: true, data: usuario });
     } catch (error) {
       res.status(400).json({ success: false, message: error.message });

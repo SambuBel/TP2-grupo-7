@@ -16,6 +16,7 @@ Usuario.init(
       validate: {
         len: [2, 100],
         notEmpty: true,
+        is: /^[a-záéíóúñüÁÉÍÓÚÑÜ\s]+$/i,
       },
     },
     email: {
