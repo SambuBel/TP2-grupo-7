@@ -37,4 +37,11 @@ Usuario.beforeCreate(async (usuario) => {
   usuario.password = await bcrypt.hash(usuario.password, salt);
 });
 
+Usuario.beforeUpdate(async (usuario) => {
+  if (usuario.changed("password")) {
+    const salt = await bcrypt.genSalt(10);
+    usuario.password = await bcrypt.hash(usuario.password, salt);
+  }
+});
+
 export default Usuario;

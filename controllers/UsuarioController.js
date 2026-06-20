@@ -31,23 +31,40 @@ export class UsuarioController {
     }
   };
 
+  updateUsuario = async (req, res) => {
+    try {
+      const usuario = await this.usuarioService.updateUsuario(req.params.id, req.body);
+      res.json({ success: true, data: usuario });
+    } catch (error) {
+      res.status(400).json({ success: false, message: error.message });
+    }
+  };
+
+  deleteUsuario = async (req, res) => {
+    try {
+      await this.usuarioService.deleteUsuario(req.params.id);
+      res.json({ success: true, message: "Usuario eliminado" });
+    } catch (error) {
+      res.status(404).json({ success: false, message: error.message });
+    }
+  };
+
   login = async (req, res) => {
     try {
       const { token, id } = await this.usuarioService.login(req.body);
       res.cookie("payload", token, { httpOnly: true });
-      res.json({ success: true, message: id });
+      res.json({ success: true, data: { id } });
     } catch (error) {
       res.status(401).json({ success: false, message: error.message });
     }
   };
 
-  me = async (req, res) => {
-    try {
-      const token = req.cookies.payload;
-      const data = await this.usuarioService.me(token);
-      res.json({ success: true, message: data });
-    } catch (error) {
-      res.status(401).json({ success: false, message: error.message });
-    }
+  logout = (_req, res) => {
+    res.clearCookie("payload");
+    res.json({ success: true, message: "Sesión cerrada" });
+  };
+
+  me = (req, res) => {
+    res.json({ success: true, data: req.usuario });
   };
 }
