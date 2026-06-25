@@ -1,8 +1,10 @@
 import { generateToken } from "../utils/jwt.js";
 
 export class UsuarioService {
-  constructor(usuarioModel) {
+  constructor(usuarioModel, opinionModel, libroModel) {
     this.usuarioModel = usuarioModel;
+    this.opinionModel = opinionModel;
+    this.libroModel   = libroModel;
   }
 
   #sinPassword = { attributes: { exclude: ["password"] } };
@@ -33,6 +35,16 @@ export class UsuarioService {
     const usuario = await this.usuarioModel.findByPk(id);
     if (!usuario) throw new Error("Usuario no encontrado");
     await usuario.destroy();
+  }
+
+  async getOpinionesByUsuario(id) {
+    const usuario = await this.usuarioModel.findByPk(id, { attributes: { exclude: ["password"] } });
+    if (!usuario) throw new Error("Usuario no encontrado");
+    const opiniones = await this.opinionModel.findAll({
+      where: { usuarioId: id },
+      include: [{ model: this.libroModel, attributes: ["id", "titulo", "autor"] }],
+    });
+    return { usuario, opiniones };
   }
 
   async login({ email, password }) {

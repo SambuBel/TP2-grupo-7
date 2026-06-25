@@ -53,6 +53,15 @@ export class UsuarioController {
     }
   };
 
+  getOpinionesByUsuario = async (req, res) => {
+    try {
+      const data = await this.usuarioService.getOpinionesByUsuario(req.params.id);
+      res.json({ success: true, data });
+    } catch (error) {
+      res.status(404).json({ success: false, message: error.message });
+    }
+  };
+
   login = async (req, res) => {
     try {
       const { token, id } = await this.usuarioService.login(req.body);

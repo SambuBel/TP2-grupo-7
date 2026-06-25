@@ -12,7 +12,8 @@ usuarioRoutes.post("/",        usuarioController.createUsuario);
 usuarioRoutes.post("/logout",  autenticar, usuarioController.logout);
 usuarioRoutes.get("/me",       autenticar, usuarioController.me);
 usuarioRoutes.get("/",         autenticar, usuarioController.getAllUsuarios);
-usuarioRoutes.get("/:id",      autenticar, usuarioController.getUsuarioById);
+usuarioRoutes.get("/:id",           autenticar, usuarioController.getUsuarioById);
+usuarioRoutes.get("/:id/opiniones", autenticar, usuarioController.getOpinionesByUsuario);
 usuarioRoutes.put("/:id",      autenticar, usuarioController.updateUsuario);
 usuarioRoutes.delete("/:id",   autenticar, usuarioController.deleteUsuario);
 
